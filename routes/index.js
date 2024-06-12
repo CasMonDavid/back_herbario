@@ -5,7 +5,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 const corsOption = {
-    origin: ['http://localhost:3000'],
+    origin: ['https://proyectoherbario-production.up.railway.app/'],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
 }
