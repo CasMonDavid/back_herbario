@@ -12,6 +12,10 @@ const corsOption = {
 app.use(cors(corsOption));
 app.use(express.json());
 
+app.get("/", (req, res) => {
+    res.send({msg:"Hola mundo!"});
+})
+
 // FUNCION PARA INGRESAR ADMINISTRADORES (no testeado)
 app.post("/create",async (req,res, next)=>{
     const name = req.body.name;
