@@ -4,8 +4,11 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3001;
 
+//local: http://http://localhost:3000
+//railway: https://proyectoherbario-production.up.railway.app
+
 const corsOption = {
-    origin: 'https://proyectoherbario-production.up.railway.app',
+    origin: 'http://localhost:3000',
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
@@ -17,8 +20,39 @@ app.get("/", (req, res) => {
     res.send({msg:"Hola mundo!"});
 });
 
-// FUNCION PARA INGRESAR ADMINISTRADORES (no testeado)
-app.post("/create",async (req,res, next)=>{
+app.post("/iniciarsesion/investigador", async (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    try {
+        const [result] = await connection.query('SELECT * FROM investigadores WHERE correo_electronico = ? AND contrasena = ?', [email, password]);
+        if (result.length > 0) {
+            res.json({ success: true, data: result[0] });
+        } else {
+            res.json({ success: false });
+        }
+    } catch(err) {
+        console.log(err);
+        res.status(500).send("Error al iniciar sesión");
+    }
+});
+
+app.post("/registrar/user",async (req,res, next)=>{
+    const name = req.body.name;
+    const email = req.body.email;
+    const password = req.body.password;
+
+    try {
+        const [result] = await connection.query('INSERT INTO investigadores(nombre, correo_electronico, contrasena, codigo_acceso) VALUES(?,?,?,?)',[name,email,password,123456789]);
+        res.send("Investigador registrado con éxito!!");
+    }catch(err) {
+        console.log(err);
+        res.status(500).send("Error al registrar administrador");
+    }
+
+});
+
+app.post("/createAdmin",async (req,res, next)=>{
     const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
