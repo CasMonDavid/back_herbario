@@ -20,6 +20,16 @@ app.get("/", (req, res) => {
     res.send({msg:"Hola mundo!"});
 });
 
+app.get("/plantas/getall", async (req, res, next) => {
+    try {
+        const [result] = await connection.query('SELECT * FROM plantas');
+        res.json(result);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Error al obtener la lista de plantas");
+    }
+});
+
 app.post("/iniciarsesion/investigador", async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
