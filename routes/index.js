@@ -5,9 +5,10 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 const corsOption = {
-    origin: 'https://proyectoherbario-production.up.railway.app/',
+    origin: 'https://proyectoherbario-production.up.railway.app',
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
 }
 app.use(cors(corsOption));
 app.use(express.json());
