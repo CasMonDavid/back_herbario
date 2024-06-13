@@ -8,7 +8,7 @@ const port = process.env.PORT || 3001;
 //railway: https://proyectoherbario-production.up.railway.app
 
 const corsOption = {
-    origin: 'http://localhost:3000',
+    origin: 'https://proyectoherbario-production.up.railway.app',
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
